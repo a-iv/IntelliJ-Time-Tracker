@@ -5,9 +5,9 @@ Time Tracker plugin for IntelliJ Platform.
 
 Time Tracker lets you create tasks and track the progress and the time you spent on each individual task. It also provides an advanced history view where you can look and filter all tasks, active or finished, and generate HTML reports.
 
-![Screen1](http://plugins.jetbrains.com/oldimg/screenshots/Time_Tracker_2393.png)
+.. image:: http://plugins.jetbrains.com/oldimg/screenshots/Time_Tracker_2393.png
 
-![Screen2](http://plugins.jetbrains.com/oldimg/screenshots/Time_Tracker_2392.png)
+.. image:: http://plugins.jetbrains.com/oldimg/screenshots/Time_Tracker_2392.png
 
 Author
 ======
