@@ -14,8 +14,8 @@ import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.peer.PeerFactory;
 import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.content.ContentManagerAdapter;
 import com.intellij.ui.content.ContentManagerEvent;
 import org.jdom.Element;
@@ -90,9 +90,9 @@ public class TimeTrackerPlugin implements ApplicationComponent, JDOMExternalizab
 		final HistoryWindow historyWindow = new HistoryWindow();
 		GlobalTaskModel.getInstance().addTaskListener(historyWindow);
 
-		Content content = PeerFactory.getInstance().getContentFactory().createContent(trackerWindow, "Tasks", false);
+		Content content = ContentFactory.SERVICE.getInstance().createContent(trackerWindow, "Tasks", false);
 		window.getContentManager().addContent(content);
-		content = PeerFactory.getInstance().getContentFactory().createContent(historyWindow, "History", false);
+		content = ContentFactory.SERVICE.getInstance().createContent(historyWindow, "History", false);
 		window.getContentManager().addContent(content);
 		window.getContentManager().addContentManagerListener(new ContentManagerAdapter() {
 			@Override
