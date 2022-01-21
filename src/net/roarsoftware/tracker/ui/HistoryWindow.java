@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.util.Icons;
-import com.toedter.calendar.JDateChooser;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -56,6 +57,7 @@ public class HistoryWindow extends JPanel implements TaskListener {
 
 	private static final Icon TODO_DEFAULT = IconLoader.findIcon("/general/todoDefault.png");
 	private static final Icon TODO_IMPORTANT = IconLoader.findIcon("/general/todoImportant.png");
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	private DefaultMutableTreeNode root;
 	private DefaultTreeModel treeModel;
@@ -70,8 +72,8 @@ public class HistoryWindow extends JPanel implements TaskListener {
 	private NodeInfo rootInfo;
 	private NodeInfo idleInfo;
 	private JTree tree;
-	private JDateChooser startDateChooser;
-	private JDateChooser endDateChooser;
+	private JTextField startDateChooser;
+	private JTextField endDateChooser;
 	private JCheckBox dateFilterActive;
 
 	public HistoryWindow() {
@@ -130,20 +132,32 @@ public class HistoryWindow extends JPanel implements TaskListener {
 			}
 		});
 
-		startDateChooser = new JDateChooser(new Date());
-		endDateChooser = new JDateChooser(new Date());
+		startDateChooser = new JTextField();
+		endDateChooser = new JTextField();
 		startDateChooser.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				GlobalTaskModel.getInstance().setDateRangeStart(new Day(startDateChooser.getDate()));
+				try {
+					GlobalTaskModel.getInstance().setDateRangeStart(
+							new Day(dateFormat.parse(startDateChooser.getText())));
+				} catch (ParseException ex) {
+					startDateChooser.setText(
+							dateFormat.format(GlobalTaskModel.getInstance().getDateFilter().getStart().getDate()));
+				}
 			}
 		});
 		endDateChooser.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
-				GlobalTaskModel.getInstance().setDateRangeEnd(new Day(endDateChooser.getDate()));
+				try {
+					GlobalTaskModel.getInstance().setDateRangeEnd(
+							new Day(dateFormat.parse(endDateChooser.getText())));
+				} catch (ParseException ex) {
+					endDateChooser.setText(
+							dateFormat.format(GlobalTaskModel.getInstance().getDateFilter().getEnd().getDate()));
+				}
 			}
 		});
 		JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -379,13 +393,11 @@ public class HistoryWindow extends JPanel implements TaskListener {
 	}
 
 	public void dateRangeChanged(DateFilter dateFilter) {
-		startDateChooser.setDate(dateFilter.getStart().getDate());
-		endDateChooser.setDate(dateFilter.getEnd().getDate());
+		startDateChooser.setText(dateFormat.format(dateFilter.getStart().getDate()));
+		endDateChooser.setText(dateFormat.format(dateFilter.getEnd().getDate()));
 		tableModel.applyFilters();
 //		tableModel.removeFilter(dateFilter);
 //		tableModel.addFilter(dateFilter);
-		startDateChooser.setMaxSelectableDate(endDateChooser.getDate());
-		endDateChooser.setMinSelectableDate(startDateChooser.getDate());
 		// update tree:
 //		Set<Task> s = new HashSet<Task>(taskNodes.keySet());
 //		for (Task task : s) {
