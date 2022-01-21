@@ -7,8 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
@@ -132,15 +132,17 @@ public class HistoryWindow extends JPanel implements TaskListener {
 
 		startDateChooser = new JDateChooser(new Date());
 		endDateChooser = new JDateChooser(new Date());
-		startDateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+		startDateChooser.addFocusListener(new FocusAdapter() {
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
+			public void focusLost(FocusEvent e) {
+				super.focusLost(e);
 				GlobalTaskModel.getInstance().setDateRangeStart(new Day(startDateChooser.getDate()));
 			}
 		});
-		endDateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+		endDateChooser.addFocusListener(new FocusAdapter() {
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
+			public void focusLost(FocusEvent e) {
+				super.focusLost(e);
 				GlobalTaskModel.getInstance().setDateRangeEnd(new Day(endDateChooser.getDate()));
 			}
 		});
