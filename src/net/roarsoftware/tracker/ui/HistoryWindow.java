@@ -52,7 +52,7 @@ import net.roarsoftware.tracker.model.TaskListener;
 /**
  * @author Janni Kovacs
  */
-public class HistoryWindow extends JPanel implements TaskListener, PropertyChangeListener {
+public class HistoryWindow extends JPanel implements TaskListener {
 
 	private static final Icon TODO_DEFAULT = IconLoader.findIcon("/general/todoDefault.png");
 	private static final Icon TODO_IMPORTANT = IconLoader.findIcon("/general/todoImportant.png");
@@ -132,8 +132,18 @@ public class HistoryWindow extends JPanel implements TaskListener, PropertyChang
 
 		startDateChooser = new JDateChooser(new Date());
 		endDateChooser = new JDateChooser(new Date());
-		startDateChooser.getDateEditor().addPropertyChangeListener("date", this);
-		endDateChooser.getDateEditor().addPropertyChangeListener("date", this);
+		startDateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				GlobalTaskModel.getInstance().setDateRangeStart(new Day(startDateChooser.getDate()));
+			}
+		});
+		endDateChooser.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				GlobalTaskModel.getInstance().setDateRangeEnd(new Day(endDateChooser.getDate()));
+			}
+		});
 		JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		dateFilterActive = new JCheckBox("Select tasks from: ");
 		dateFilterActive.addActionListener(new ActionListener() {
@@ -392,15 +402,6 @@ public class HistoryWindow extends JPanel implements TaskListener, PropertyChang
 			tableModel.removeFilter(GlobalTaskModel.getInstance().getDateFilter());
 		}
 	}
-
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getSource() == startDateChooser.getDateEditor()) {
-			GlobalTaskModel.getInstance().setDateRangeStart(new Day(startDateChooser.getDate()));
-		} else if (evt.getSource() == endDateChooser.getDateEditor()) {
-			GlobalTaskModel.getInstance().setDateRangeEnd(new Day(endDateChooser.getDate()));
-		}
-	}
-
 
 	private class RemoveFilterAction extends AnAction {
 		private RemoveFilterAction() {
