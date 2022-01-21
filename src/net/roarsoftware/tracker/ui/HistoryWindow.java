@@ -207,6 +207,7 @@ public class HistoryWindow extends JPanel implements TaskListener {
 		group.add(new EditFilterAction());
 		ActionToolbar toolBar = ActionManager.getInstance()
 				.createActionToolbar(TimeTrackerPlugin.TOOL_WINDOW_ID, group, false);
+		toolBar.setTargetComponent(startDateChooser);
 		filtersPanel.add(new JLabel("Filters:"), BorderLayout.NORTH);
 		filtersPanel.add(toolBar.getComponent(), BorderLayout.WEST);
 		filtersPanel.add(new JScrollPane(filtersTable));

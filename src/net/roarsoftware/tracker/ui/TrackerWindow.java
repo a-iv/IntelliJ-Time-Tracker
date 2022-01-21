@@ -114,6 +114,7 @@ public class TrackerWindow extends JPanel implements TaskListener, ActionListene
 		group.add(new EditTaskAction());
 		ActionToolbar toolBar = ActionManager.getInstance()
 				.createActionToolbar(TimeTrackerPlugin.TOOL_WINDOW_ID, group, false);
+		toolBar.setTargetComponent(pause);
 		center.add(toolBar.getComponent(), BorderLayout.WEST);
 		add(center);
 
