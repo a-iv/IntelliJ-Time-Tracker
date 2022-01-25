@@ -5,7 +5,7 @@
   <description><![CDATA[Time Tracker lets you create tasks and track the progress and the time you spent
   on each individual task. It also provides an advanced history view where you can look and filter all tasks,
   active or finished, and generate HTML reports.]]></description>
-  <version>0.4</version>
+  <version>0.5</version>
   <vendor email="jannikovacs@gmail.com">Janni Kovacs</vendor>
   <idea-version since-build="7000"/>
 	<application-components>
