@@ -14,6 +14,11 @@ Author
 
 Janni Kovacs 
 
+Maintainer
+==========
+
+Alexander Ivanov
+
 Changes
 =======
 
