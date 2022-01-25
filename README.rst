@@ -26,3 +26,9 @@ Changes
 ---
 
 + Support for all IntelliJ products. Tested with IDEA, PyCharm.
+
+0.5
+---
+
++ Darcula and IntelliJ themes support.
++ Support for the current version of IntelliJ Platform Plugin SDK. Tested with IDEA 2021.3.1, PyCharm 2021.3.1, Android Studio 2020.3.1.
