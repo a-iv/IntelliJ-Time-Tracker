@@ -107,7 +107,9 @@ public class TimeTrackerPlugin implements ApplicationComponent, JDOMExternalizab
 	public void projectClosed(Project project) {
 		ToolWindowManager m = ToolWindowManager.getInstance(project);
 		GlobalTaskModel.getInstance().removeProjectTaskListeners(project);
-		m.unregisterToolWindow(TOOL_WINDOW_ID);
+		if (!project.isDisposed()) {
+			m.unregisterToolWindow(TOOL_WINDOW_ID);
+		}
 	}
 
 	public void readExternal(Element element) throws InvalidDataException {
