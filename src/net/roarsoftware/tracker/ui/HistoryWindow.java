@@ -32,6 +32,7 @@ import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.util.Icons;
 import org.jfree.chart.ChartFactory;
@@ -75,9 +76,11 @@ public class HistoryWindow extends JPanel implements TaskListener {
 	private JTextField startDateChooser;
 	private JTextField endDateChooser;
 	private JCheckBox dateFilterActive;
+	private Project project;
 
-	public HistoryWindow() {
+	public HistoryWindow(Project project) {
 		super(new BorderLayout());
+		this.project = project;
 
 		root = new DefaultMutableTreeNode();
 		treeModel = new DefaultTreeModel(root);
@@ -269,6 +272,11 @@ public class HistoryWindow extends JPanel implements TaskListener {
 		}
 		if (tm.isDateFilterActive())
 			tableModel.addFilter(tm.getDateFilter());
+	}
+
+	@Override
+	public Project getProject() {
+		return project;
 	}
 
 	public void taskAdded(Task task) {

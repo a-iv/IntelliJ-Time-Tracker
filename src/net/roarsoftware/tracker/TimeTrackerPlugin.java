@@ -87,7 +87,7 @@ public class TimeTrackerPlugin implements ApplicationComponent, JDOMExternalizab
 		window.setIcon(TOOL_WINDOW_ICON);
 		TrackerWindow trackerWindow = new TrackerWindow(project);
 		GlobalTaskModel.getInstance().addTaskListener(trackerWindow);
-		final HistoryWindow historyWindow = new HistoryWindow();
+		final HistoryWindow historyWindow = new HistoryWindow(project);
 		GlobalTaskModel.getInstance().addTaskListener(historyWindow);
 
 		Content content = ContentFactory.SERVICE.getInstance().createContent(trackerWindow, "Tasks", false);
@@ -106,12 +106,7 @@ public class TimeTrackerPlugin implements ApplicationComponent, JDOMExternalizab
 
 	public void projectClosed(Project project) {
 		ToolWindowManager m = ToolWindowManager.getInstance(project);
-		ToolWindow window = m.getToolWindow(TOOL_WINDOW_ID);
-		TrackerWindow w = (TrackerWindow) window.getContentManager().getContent(0).getComponent();
-		HistoryWindow hw = (HistoryWindow) window.getContentManager().getContent(1).getComponent();
-		GlobalTaskModel model = GlobalTaskModel.getInstance();
-		model.removeTaskListener(w);
-		model.removeTaskListener(hw);
+		GlobalTaskModel.getInstance().removeProjectTaskListeners(project);
 		m.unregisterToolWindow(TOOL_WINDOW_ID);
 	}
 

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import javax.swing.Timer;
 
+import com.intellij.openapi.project.Project;
 import net.roarsoftware.tracker.core.filters.DateFilter;
 import net.roarsoftware.tracker.core.filters.TaskFilterInfo;
 
@@ -148,6 +149,10 @@ public class GlobalTaskModel implements ActionListener {
 
 	public void removeTaskListener(TaskListener l) {
 		listeners.remove(l);
+	}
+
+	public void removeProjectTaskListeners(Project project) {
+		listeners.removeIf(taskListener -> taskListener.getProject() == project);
 	}
 
 	public void actionPerformed(ActionEvent e) {

@@ -141,6 +141,11 @@ public class TrackerWindow extends JPanel implements TaskListener, ActionListene
 	public void dispose() {
 	}
 
+	@Override
+	public Project getProject() {
+		return project;
+	}
+
 	public void taskAdded(Task t) {
 		model.fireTableDataChanged();
 	}

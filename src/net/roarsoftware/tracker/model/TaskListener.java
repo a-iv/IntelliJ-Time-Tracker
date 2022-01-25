@@ -1,5 +1,6 @@
 package net.roarsoftware.tracker.model;
 
+import com.intellij.openapi.project.Project;
 import net.roarsoftware.tracker.core.filters.DateFilter;
 
 /**
@@ -10,6 +11,8 @@ import net.roarsoftware.tracker.core.filters.DateFilter;
  * @author Janni Kovacs
  */
 public interface TaskListener {
+
+	public Project getProject();
 
 	public void taskAdded(Task t);
 
