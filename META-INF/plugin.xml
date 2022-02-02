@@ -7,7 +7,7 @@
   active or finished, and generate HTML reports.]]></description>
   <version>0.5</version>
   <vendor email="jannikovacs@gmail.com">Janni Kovacs</vendor>
-  <idea-version since-build="7000"/>
+  <idea-version since-build="181.*"/>
 	<application-components>
 		<component>
 			<implementation-class>net.roarsoftware.tracker.TimeTrackerPlugin</implementation-class>
